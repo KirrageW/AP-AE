@@ -1,3 +1,5 @@
+// represents one grid square which can be occupied by a vehicle
+
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -24,9 +26,12 @@ public class Grid {
 			}
 			
 			isTaken = true;
-			// when vehicle is in the gridSquare - draw a car here and make it wait for variable length
-			// use this
+			
+			// when vehicle is in the gridSquare - draw the vehicle here 
+			
 			representation = "|"+x.getRepresentation()+"| ";
+			
+			// make the thread wait here for the speed of that vehicle
 			x.getSpeed();
 			
 			
@@ -37,8 +42,7 @@ public class Grid {
 			e.printStackTrace();
 		}finally {
 			spaceLock.unlock();
+			isTaken = false;
 		}
 	}
-	
-
 }

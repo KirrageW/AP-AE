@@ -1,5 +1,7 @@
+// will be abstract after tests - for different vehicles 
 
-public class Vehicle {
+
+public class Vehicle extends Thread {
 	private int direction; // 0 = north to south, 1 = west to east
 	private int speed; // how long it will wait in each grid
 	private int size; // different types of vehicle may occupy more than one lane!
@@ -21,8 +23,17 @@ public class Vehicle {
 		representation = "o";
 	}
 	
-	private String getRepresentation() {
+	public String getRepresentation() {
 		return representation;
+	}
+
+	
+	public void run() {
+		try {
+			Grid.accomodateGridSquare(this); // so does need some coordinates - but would this be from the array made in main.... ??
+		}
+		
+		
 	}
 	
 	

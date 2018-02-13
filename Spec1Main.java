@@ -1,3 +1,5 @@
+// makes intersection of grids.......
+
 
 public class Spec1Main {
 	
