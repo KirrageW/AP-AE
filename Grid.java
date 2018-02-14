@@ -14,35 +14,30 @@ public class Grid {
 	private boolean isTaken = false;
 	
 	public Grid() {
-		System.out.print(representation);
+		System.out.print(representation); //maybe dont have this here... or maybe not a problem
 	}
 	
-	public void accomodateGridSquare(Vehicle x) {
-		// called by the vehicle
+	public void occupyGridSquare(Vehicle x) {
+		// called by the vehicle thread
 		spaceLock.lock();
 		try {
 			while(this.isTaken) {
 				occupiedCondition.await();
 			}
-			
+			// when vehicle is in the gridSquare
 			isTaken = true;
-			
-			// when vehicle is in the gridSquare - draw the vehicle here 
-			
-			representation = "|"+x.getRepresentation()+"| ";
-			
+			representation = "|"+x.getRepresentation()+"| ";			
 			// make the thread wait here for the speed of that vehicle
-			x.getSpeed();
-			
 			
 			// Alert all the waiting things when ready to move out 
 			occupiedCondition.signalAll();
-
 		}catch(InterruptedException e){
 			e.printStackTrace();
 		}finally {
-			spaceLock.unlock();
+			representation = "| | ";
 			isTaken = false;
+			spaceLock.unlock();
+			
 		}
 	}
 }

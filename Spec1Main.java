@@ -15,5 +15,11 @@ public class Spec1Main {
 			}
 		
 		}
+		
+		Vehicle testCar = new Vehicle(0,100,5,"o");
+		
+		
+		
+		
 	}		
 }

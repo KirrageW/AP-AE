@@ -35,20 +35,18 @@ public class Vehicle extends Thread {
 		return representation;
 	}
 	
-	public void move(Grid x ) {  // need to get them to move
-		x.accomodateGridSquare(this);
-		
-		
-		
+	public void move() {  // need to get them to move
+		location.occupyGridSquare(this);
+		try {
+			Thread.sleep(speed);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
-	
 	public void run() {
-		try {
-			location.accomodateGridSquare(this); // so does need some coordinates - but would this be from the array made in main.... ??
-		}
-		
-		
+		move();// so does need some coordinates - but would this be from the array made in main.... ??	
 	}
 	
 	
