@@ -33,7 +33,7 @@ public class Render extends Thread{
 				e.printStackTrace();
 			}
 		
-	}
+		}
 	}
 	
 	// And From your main() method or any other method

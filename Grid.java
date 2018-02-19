@@ -46,10 +46,10 @@ public class Grid {
 			e.printStackTrace();
 		}finally {
 			// set back to empty
-			representation = "| | ";
-			isTaken = false;
 			
+			isTaken = false;
 			spaceLock.unlock();
+			representation = "| | ";
 			
 		}
 	}
