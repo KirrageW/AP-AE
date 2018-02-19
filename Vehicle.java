@@ -67,28 +67,60 @@ public class Vehicle extends Thread {
 	}
 
 	public void run() {
+		int count = 0;
+		Grid temp = null;
 		while (checkEnd()==true){
-			location.occupyGridSquare(this);
-			/*try{
-				Thread.sleep(speed); // time to eat it
-			}catch(InterruptedException e) {
-				e.printStackTrace();
-			}*/
-			directionTravel();
-			checkEnd();
+			
+			
+			
+			if (count>0) {
+				 temp.leaveGridSquare(this); // .... OUT TWO 
+			}
+			
+						
+			
+			location.occupyGridSquare(this); // IN ONE IN THREE 
+			if (count > 0) {
+			temp.leaveGridSquare(this); 
+			}
+			
+			
+			temp = location;
+			
+			// updates location to next grid square
+			directionTravel(); 
+			// checks to see if at end of matrix
+			checkEnd();			
+			// attempt to move into next grid square
+			
+			location.occupyGridSquare(this); // IN TWO
+			temp.leaveGridSquare(this); // OUT ONE
+			temp = location; // POINT AT TWO
+			directionTravel(); 
+			// checks to see if at end of matrix
+			checkEnd();			
+			// attempt to move into next grid square
+			//temp.leaveGridSquare(this);
+			// when successful (i.e not put to sleep) remove lock on last square
+			//temp.leaveGridSquare(this);
+									
+			checkEnd();		
+			count++;
 		}
 	}
 	
 	public void directionTravel(){
+		
 		if (getDirection() == 0) {
-			location = intersection[curr++][startPos]; // have to use matrix coordinate
-			
+			location = intersection[curr++][startPos]; // have to use matrix coordinate			
 		}
 		if (getDirection() == 1) {
 			location = intersection[startPos][curr++]; // so basically, location is moved to the next one...
 		}
 		
 	}
+	
+	
 	
 	public boolean checkEnd() {
 		if (direction == 0 && curr==intersection.length) {
