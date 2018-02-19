@@ -19,6 +19,9 @@ public class Intersection {
 				intersection[i][j] = new Grid();
 			}
 		}
+		
+		
+		
 	}
 	
 	
