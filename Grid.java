@@ -10,8 +10,10 @@ public class Grid {
 	
 	private ReentrantLock spaceLock = new ReentrantLock();
 	private Condition occupiedCondition = spaceLock.newCondition();
+	
 	private String representation = "| ";
 	private String emptyRepresentation = "| ";
+	private Grid nextGrid;
 	
 	
 	private boolean isTaken = false;
@@ -27,7 +29,7 @@ public class Grid {
 	}*/
 	
 	public void occupyGridSquare(Vehicle x) {
-		System.out.println(this+ "has been called");
+		//System.out.println(this+ "has been called");
 		
 		// called by the vehicle thread
 		spaceLock.lock();
@@ -50,15 +52,15 @@ public class Grid {
 			// Alert all the waiting things when ready to move out 
 			//occupiedCondition.signalAll();
 		}catch(InterruptedException e){
-		//	e.printStackTrace();
+			e.printStackTrace();
 		}//finally {
 			
 			// set back to empty	
-			//isTaken = false; // BUT WHAT IF THREAD CANNOT ENTER NEXT ONE???????
-			//spaceLock.unlock();
-			//representation = "| ";
+		/*	isTaken = false; // BUT WHAT IF THREAD CANNOT ENTER NEXT ONE???????
+			spaceLock.unlock();
+			representation = "| ";
 			
-		//}
+		}*/
 	}
 	
 	//should only be successful if the vehicle has entered the next grid square

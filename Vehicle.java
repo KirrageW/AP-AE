@@ -70,19 +70,29 @@ public class Vehicle extends Thread {
 		int count = 0;
 		Grid temp = location;
 		
-		while (checkEnd()==true){
+	while (checkEnd()==true){
+			
 			if (count > 0) {
 				temp.leaveGridSquare(this);
 			}
+			
 			location.occupyGridSquare(this);
 			temp = location;
 			directionTravel();
+		/*	directionTravel();
+			directionTravel();
+			directionTravel();*/
 			location.occupyGridSquare(this);
-			if (count > 0) {
+			temp.leaveGridSquare(this);
+			directionTravel();
+			
+		/*	if (count > 0) {
 				temp.leaveGridSquare(this);
 			}
+			
 			temp = location;
-			directionTravel();
+			directionTravel();*/
+			
 			checkEnd();		
 			count++;
 		}

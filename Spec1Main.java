@@ -18,9 +18,10 @@ public class Spec1Main {
 					}				
 			}
 
+			
 			// start drawing
 				Render renderer = new Render(intersection);
-				//renderer.start();
+				renderer.start();
 				
 				// spawn cars
 				/*for (int i = 0; i < 1000; i++) {
@@ -36,8 +37,7 @@ public class Spec1Main {
 				
 				Vehicle testCar = new Vehicle(0, "o", intersection);
 				testCar.start();
-				
-				
+								
 			}		
 		
 
