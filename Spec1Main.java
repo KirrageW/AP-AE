@@ -20,10 +20,10 @@ public class Spec1Main {
 
 			// start drawing
 				Render renderer = new Render(intersection);
-				renderer.start();
+				//renderer.start();
 				
 				// spawn cars
-				for (int i = 0; i < 1000; i++) {
+				/*for (int i = 0; i < 1000; i++) {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
@@ -32,8 +32,10 @@ public class Spec1Main {
 					}
 					new Vehicle(0,"o",intersection).start();
 					new Vehicle(1,"-",intersection).start();
-				}
+				}*/
 				
+				Vehicle testCar = new Vehicle(0, "o", intersection);
+				testCar.start();
 				
 				
 			}		

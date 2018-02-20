@@ -68,42 +68,21 @@ public class Vehicle extends Thread {
 
 	public void run() {
 		int count = 0;
-		Grid temp = null;
+		Grid temp = location;
+		
 		while (checkEnd()==true){
-			
-			
-			
-			if (count>0) {
-				 temp.leaveGridSquare(this); // .... OUT TWO 
-			}
-			
-						
-			
-			location.occupyGridSquare(this); // IN ONE IN THREE 
 			if (count > 0) {
-			temp.leaveGridSquare(this); 
+				temp.leaveGridSquare(this);
 			}
-			
-			
+			location.occupyGridSquare(this);
 			temp = location;
-			
-			// updates location to next grid square
-			directionTravel(); 
-			// checks to see if at end of matrix
-			checkEnd();			
-			// attempt to move into next grid square
-			
-			location.occupyGridSquare(this); // IN TWO
-			temp.leaveGridSquare(this); // OUT ONE
-			temp = location; // POINT AT TWO
-			directionTravel(); 
-			// checks to see if at end of matrix
-			checkEnd();			
-			// attempt to move into next grid square
-			//temp.leaveGridSquare(this);
-			// when successful (i.e not put to sleep) remove lock on last square
-			//temp.leaveGridSquare(this);
-									
+			directionTravel();
+			location.occupyGridSquare(this);
+			if (count > 0) {
+				temp.leaveGridSquare(this);
+			}
+			temp = location;
+			directionTravel();
 			checkEnd();		
 			count++;
 		}
