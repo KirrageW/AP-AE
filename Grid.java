@@ -23,14 +23,25 @@ public class Grid {
 	
 	
 	public void occupyGridSquare(Vehicle x) {
-	
+		try {
+			Thread.sleep(x.getSpeed());
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		spaceLock.lock();
+		//System.out.println("I've gone in "+this);
 		try {
 		    
-		    while (isTaken = false) {
+		    while (isTaken) {
+		    	//System.out.println("I'm in here: "+this);
 		        occupiedCondition.await();
 		    }
-		   
+		    
+		    isTaken = true;
+		    representation = "|"+x.getRepresentation();	
+			
 		
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -38,12 +49,13 @@ public class Grid {
 	
 		} finally {
 		    spaceLock.unlock();
+		    //System.out.println("I'm unlocking this: "+this);
 		}
 		
 		
 		
 	
-			spaceLock.lock();
+		/*	spaceLock.lock();
 			try {
 			    isTaken = true;
 			    representation = "|"+x.getRepresentation();	
@@ -54,7 +66,7 @@ public class Grid {
 				
 			} finally {
 			    spaceLock.unlock();
-			}
+			}*/
 						
 			
 			
@@ -63,15 +75,17 @@ public class Grid {
 	
 	//should only be successful if the vehicle has entered the next grid square
 	public void leaveGridSquare(Vehicle x) {
-	
+		//System.out.println("I'm leaving this: "+this);
 			
 		spaceLock.lock();
 		try {
 		    isTaken = false;
-		    representation = "| ";
+		  
+		    
 		    occupiedCondition.signalAll();
 		} finally {
 		   spaceLock.unlock();
+		   representation = "| ";
 		   
 		}
 			

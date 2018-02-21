@@ -1,6 +1,7 @@
 
 public class BrokenCar extends Vehicle {
 	
+	String representation = "o";
 	
 	
 	
@@ -13,5 +14,13 @@ public class BrokenCar extends Vehicle {
 		x.occupyGridSquare(this);
 		
 	}
+	
+	public void run() {
+		
+		
+	}
 
+	public String getRepresentation() {
+		return representation;
+	}
 }

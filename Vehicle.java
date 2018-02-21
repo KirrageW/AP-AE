@@ -9,6 +9,7 @@ public class Vehicle extends Thread {
 	private int size; // different types of vehicle may occupy more than one lane!
 	private String representation;
 	private Grid location; 
+	private Grid lastOne;
 	private Grid[][] intersection; // needs one of these...
 	protected int startPos; 
 	private int curr;
@@ -34,6 +35,10 @@ public class Vehicle extends Thread {
 			location = intersection[startPos][curr]; //get number of rows also...
 			//System.out.println(startPos);
 		}
+	}
+	
+	public Vehicle() {
+		
 	}
 	
 	public int getDirection() {
@@ -67,30 +72,14 @@ public class Vehicle extends Thread {
 	}
 
 	public void run() {
-		Grid temp = location;
-		int count = 0;
-	
-		while (checkEnd()==true){
-			
-			
 		
-			//enters one and saves the location reference
-			location.occupyGridSquare(this);
-			if (count>0)
-				temp.leaveGridSquare(this);
-			temp = location;
-			
-			// updates location and tries enterering new grid
+		location.occupyGridSquare(this);	
+		while (checkEnd()==true){
+					
 			directionTravel();
 			location.occupyGridSquare(this);
-			
-			// leaves old grid once successful
-			temp.leaveGridSquare(this);
-			// updates temp to second location
-			temp = location;
-		
-			
-			count++;
+			getLastOne().leaveGridSquare(this);
+					
 		}
 		location.leaveGridSquare(this);
 	}
@@ -98,21 +87,37 @@ public class Vehicle extends Thread {
 	public void directionTravel(){
 		
 		if (getDirection() == 0) {
-			location = intersection[curr++][startPos]; // have to use matrix coordinate			
+			location = intersection[++curr][startPos]; // have to use matrix coordinate			
 		}
 		if (getDirection() == 1) {
-			location = intersection[startPos][curr++]; // so basically, location is moved to the next one...
+			location = intersection[startPos][++curr]; // so basically, location is moved to the next one...
 		}
 		
+	}
+	
+	public Grid getLastOne() {
+		if (getDirection() == 0) {
+			lastOne = intersection[getCurrent()-1][startPos]; 			
+		}
+		if (getDirection() == 1) {
+			lastOne = intersection[startPos][getCurrent()-1]; 
+		}
+		
+		return lastOne;
+	}
+	
+	
+	public int getCurrent() {
+		return curr;
 	}
 	
 	
 	
 	public boolean checkEnd() {
-		if (direction == 0 && curr==intersection.length) {
+		if (direction == 0 && curr==intersection.length-1) {
 				return false;
 		}
-		if (direction == 1 && curr == intersection[0].length) {
+		if (direction == 1 && curr == intersection[0].length-1) {
 				return false;
 		}
 		else 

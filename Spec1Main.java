@@ -24,7 +24,7 @@ public class Spec1Main {
 				renderer.start();
 				
 				// spawn cars
-		/*		for (int i = 0; i < 1000; i++) {
+				for (int i = 0; i < 1000; i++) {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
@@ -33,10 +33,16 @@ public class Spec1Main {
 					}
 					new Vehicle(0,"o",intersection).start();
 					new Vehicle(1,"-",intersection).start();
-				}*/
+				}
 				
-				Vehicle testCar = new Vehicle(0, "o", intersection);
+				/*Vehicle testCar = new Vehicle(0, "o", intersection);
 				testCar.start();
+				BrokenCar testBroke1 = new BrokenCar(intersection[5][5]);
+				BrokenCar testBroke2 = new BrokenCar(intersection[5][6]);
+				BrokenCar testBroke3 = new BrokenCar(intersection[5][7]);
+				BrokenCar testBroke4 = new BrokenCar(intersection[5][8]);
+				BrokenCar testBroke5 = new BrokenCar(intersection[5][9]);
+				BrokenCar testBroke6 = new BrokenCar(intersection[5][10]);*/
 				
 				
 				
