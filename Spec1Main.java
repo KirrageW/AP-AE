@@ -1,48 +1,55 @@
 import java.util.Timer;
 
-// makes intersection of grids.......
+// makes junction of grids.......
 
 public class Spec1Main {
 	
 	public static void main(String args[]) {
 		
-			int m = 20;
+			int m = 10;
 			int n = 20;
-			Grid[][] intersection = new Grid[m][n];
+			Grid[][] junction = new Grid[m][n];
 			
-			// make intersection
+			// make junction
 			for(int i=0;i<m;i++) {
 				System.out.println("");
 					for(int j=0;j<n;j++) {
-						intersection[i][j] = new Grid(); 
+						junction[i][j] = new Grid(); 
 					}				
 			}
 
 			
 			// start drawing
-				Render renderer = new Render(intersection);
+				Render renderer = new Render(junction);
 				renderer.start();
 				
 				// spawn cars
-				for (int i = 0; i < 1000; i++) {
+				for (;;) {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					new Vehicle(0,"o",intersection).start();
-					new Vehicle(1,"-",intersection).start();
+					new Vehicle(0,"o",junction).start();
+					new Vehicle(1,"-",junction).start();
 				}
 				
-				/*Vehicle testCar = new Vehicle(0, "o", intersection);
+				
+				
+				
+				
+				
+				// for testing
+				
+				/*Vehicle testCar = new Vehicle(0, "o", junction);
 				testCar.start();
-				BrokenCar testBroke1 = new BrokenCar(intersection[5][5]);
-				BrokenCar testBroke2 = new BrokenCar(intersection[5][6]);
-				BrokenCar testBroke3 = new BrokenCar(intersection[5][7]);
-				BrokenCar testBroke4 = new BrokenCar(intersection[5][8]);
-				BrokenCar testBroke5 = new BrokenCar(intersection[5][9]);
-				BrokenCar testBroke6 = new BrokenCar(intersection[5][10]);*/
+				BrokenCar testBroke1 = new BrokenCar(junction[5][5]);
+				BrokenCar testBroke2 = new BrokenCar(junction[5][6]);
+				BrokenCar testBroke3 = new BrokenCar(junction[5][7]);
+				BrokenCar testBroke4 = new BrokenCar(junction[5][8]);
+				BrokenCar testBroke5 = new BrokenCar(junction[5][9]);
+				BrokenCar testBroke6 = new BrokenCar(junction[5][10]);*/
 				
 				
 				

@@ -1,14 +1,16 @@
+// draws the junction of gridsquares and any vehicle that may be in one, every 20 milliseconds, to system.out
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Render extends Thread{
 	
 	
-	private Grid[][] intersection;
+	private Grid[][] junction;
 	private StringBuilder frame;
 	
 	public Render(Grid[][] x) {
-		this.intersection = x;
+		this.junction = x;
 			
 	}
 	
@@ -16,27 +18,21 @@ public class Render extends Thread{
 		while(true) {
 			try {
 				frame = new StringBuilder();
-				frame.append("\r\n---------------------------------------------------------------\r\n");
-				for(int i=0;i<intersection.length;i++) {
+				frame.append("\r\n----------------------------------------");
+				for(int i=0;i<junction.length;i++) {
 					frame.append("\r\n");
-					for(int j=0;j<intersection[i].length;j++) {
-						frame.append(intersection[i][j].getRepresentation());
+					for(int j=0;j<junction[i].length;j++) {
+						frame.append(junction[i][j].getRepresentation());
 					}		
 				}
-				frame.append("\r\n---------------------------------------------------------------\r\n");
+				frame.append("\r\n----------------------------------------");
 				
-				Thread.sleep(200);
+				Thread.sleep(20);
 				System.out.print(frame);
 			
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-		
+			}		
 		}
 	}
-	
-	// And From your main() method or any other method
-	
-
 }

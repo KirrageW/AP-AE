@@ -1,4 +1,5 @@
 // represents one grid square which can be occupied by a vehicle
+// find out how to rename classes - better to call this class gridSquare
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -52,25 +53,6 @@ public class Grid {
 		    //System.out.println("I'm unlocking this: "+this);
 		}
 		
-		
-		
-	
-		/*	spaceLock.lock();
-			try {
-			    isTaken = true;
-			    representation = "|"+x.getRepresentation();	
-				Thread.sleep(x.getSpeed());
-			
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				
-			} finally {
-			    spaceLock.unlock();
-			}*/
-						
-			
-			
-			
 	}
 	
 	//should only be successful if the vehicle has entered the next grid square

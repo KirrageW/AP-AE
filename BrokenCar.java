@@ -1,4 +1,4 @@
-
+// a broken down car. used for testing to block off roads.
 public class BrokenCar extends Vehicle {
 	
 	String representation = "o";
