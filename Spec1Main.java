@@ -24,7 +24,7 @@ public class Spec1Main {
 				renderer.start();
 				
 				// spawn cars
-				/*for (int i = 0; i < 1000; i++) {
+		/*		for (int i = 0; i < 1000; i++) {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
@@ -37,6 +37,9 @@ public class Spec1Main {
 				
 				Vehicle testCar = new Vehicle(0, "o", intersection);
 				testCar.start();
+				
+				
+				
 								
 			}		
 		

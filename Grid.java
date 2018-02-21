@@ -21,57 +21,59 @@ public class Grid {
 	public Grid() {
 	}
 	
-/*	public String toString() {
-		if (isTaken == false)
-			return emptyRepresentation;
-		else
-			return representation;	
-	}*/
 	
 	public void occupyGridSquare(Vehicle x) {
-		//System.out.println(this+ "has been called");
-		
-		// called by the vehicle thread
+	
 		spaceLock.lock();
-		//System.out.println("vehicle has locked grid square "+this);
-		
 		try {
-			while(this.isTaken) {
-				occupiedCondition.await();
-				
-			}
-			// when vehicle is in the gridSquare
-			isTaken = true;
-						
-			// change visual of grid to represent presence of vehicle
-			representation = "|"+x.getRepresentation();	
-			
-			// make vehicle sleep here, after changing visual rep.
-			x.sleep(x.getSpeed());
-			
-			// Alert all the waiting things when ready to move out 
-			//occupiedCondition.signalAll();
-		}catch(InterruptedException e){
+		    
+		    while (isTaken = false) {
+		        occupiedCondition.await();
+		    }
+		   
+		
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//finally {
+	
+		} finally {
+		    spaceLock.unlock();
+		}
+		
+		
+		
+	
+			spaceLock.lock();
+			try {
+			    isTaken = true;
+			    representation = "|"+x.getRepresentation();	
+				Thread.sleep(x.getSpeed());
 			
-			// set back to empty	
-		/*	isTaken = false; // BUT WHAT IF THREAD CANNOT ENTER NEXT ONE???????
-			spaceLock.unlock();
-			representation = "| ";
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				
+			} finally {
+			    spaceLock.unlock();
+			}
+						
 			
-		}*/
+			
+			
 	}
 	
 	//should only be successful if the vehicle has entered the next grid square
 	public void leaveGridSquare(Vehicle x) {
 	
 			
-			isTaken = false;
-			occupiedCondition.signalAll();
-			//System.err.println(this+" grid square is unlocked");
-			representation = "| ";
-			spaceLock.unlock();
+		spaceLock.lock();
+		try {
+		    isTaken = false;
+		    representation = "| ";
+		    occupiedCondition.signalAll();
+		} finally {
+		   spaceLock.unlock();
+		   
+		}
 			
 	}
 	
@@ -81,13 +83,7 @@ public class Grid {
 
 	
 	public String getRepresentation() {
-		// TODO Auto-generated method stub
-	//	if (!isTaken) {
-		//	return emptyRepresentation;
-		//}
-		//else {
 			return representation;
-		//}
 	}
 	
 	

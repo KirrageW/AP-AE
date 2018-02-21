@@ -10,7 +10,7 @@ public class Vehicle extends Thread {
 	private String representation;
 	private Grid location; 
 	private Grid[][] intersection; // needs one of these...
-	private int startPos; 
+	protected int startPos; 
 	private int curr;
 	
 	public Vehicle(int direction, String rep, Grid[][] x) {
@@ -67,35 +67,32 @@ public class Vehicle extends Thread {
 	}
 
 	public void run() {
-		int count = 0;
 		Grid temp = location;
+		int count = 0;
+	
+		while (checkEnd()==true){
+			
+			
 		
-	while (checkEnd()==true){
-			
-			if (count > 0) {
+			//enters one and saves the location reference
+			location.occupyGridSquare(this);
+			if (count>0)
 				temp.leaveGridSquare(this);
-			}
-			
-			location.occupyGridSquare(this);
 			temp = location;
+			
+			// updates location and tries enterering new grid
 			directionTravel();
-		/*	directionTravel();
-			directionTravel();
-			directionTravel();*/
 			location.occupyGridSquare(this);
+			
+			// leaves old grid once successful
 			temp.leaveGridSquare(this);
-			directionTravel();
-			
-		/*	if (count > 0) {
-				temp.leaveGridSquare(this);
-			}
-			
+			// updates temp to second location
 			temp = location;
-			directionTravel();*/
+		
 			
-			checkEnd();		
 			count++;
 		}
+		location.leaveGridSquare(this);
 	}
 	
 	public void directionTravel(){
