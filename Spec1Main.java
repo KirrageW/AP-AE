@@ -1,4 +1,4 @@
-import java.util.Timer;
+
 
 // makes junction of grids.......
 
@@ -31,8 +31,8 @@ public class Spec1Main {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					new Vehicle(0,"o",junction).start();
-					new Vehicle(1,"-",junction).start();
+					new Car(0,"o",junction).start();
+					new Car(1,"-",junction).start();
 				}
 				
 				

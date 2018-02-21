@@ -1,8 +1,5 @@
 // draws the junction of gridsquares and any vehicle that may be in one, every 20 milliseconds, to system.out
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Render extends Thread{
 	
 	

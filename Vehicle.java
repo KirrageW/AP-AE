@@ -4,16 +4,17 @@ import java.util.Random;
 // will be abstract after tests - for different vehicles 
 
 
-public class Vehicle extends Thread {
-	private int direction; // 0 = north to south, 1 = west to east
-	private int speed; // how long it will wait in each grid
-	private int size; // different types of vehicle may occupy more than one lane!
-	private String representation;
-	private Grid location; 
-	private Grid lastOne;
-	private Grid[][] junction; // needs one of these...
+public abstract class Vehicle extends Thread {
+	
+	protected int direction; // 0 = north to south, 1 = west to east
+	protected int speed; // how long it will wait in each grid
+	protected int size; // different types of vehicle may occupy more than one lane!
+	protected String representation;
+	protected Grid location; 
+	protected Grid lastOne;
+	protected Grid[][] junction; // needs one of these...
 	protected int startPos; 
-	private int curr;
+	protected int curr;
 	
 	public Vehicle(int direction, String rep, Grid[][] x) {
 		
@@ -24,15 +25,28 @@ public class Vehicle extends Thread {
 		Random rand = new Random(); 
 		speed = rand.nextInt(1000);
 		
-		curr = 0;
+		
 		if (direction == 0) {
+			curr = 0;
 			startPos = rand.nextInt(x[0].length);
 			location = junction[curr][startPos];
 		}
 		if (direction == 1) {
+			curr = 0;
 			startPos = rand.nextInt(x.length);
 			location = junction[startPos][curr]; 			
 		}
+		if (direction == 2) {
+			curr = x.length-1;
+			startPos = rand.nextInt(x[0].length);
+			location = junction[curr][startPos]; 			
+		}
+		if (direction == 3) {
+			curr = x[0].length-1;
+			startPos = rand.nextInt(x.length);
+			location = junction[startPos][curr]; 			
+		}
+		
 	}
 	
 	public Vehicle() {		
@@ -73,6 +87,12 @@ public class Vehicle extends Thread {
 		}
 		if (getDirection() == 1) {
 			location = junction[startPos][++curr]; // so basically, location is moved to the next one...
+		}
+		if (getDirection() == 2) {
+			location = junction[--curr][startPos]; // so basically, location is moved to the next one...
+		}	
+		if (getDirection() == 3) {
+			location = junction[startPos][--curr]; // so basically, location is moved to the next one...
 		}		
 	}
 	
@@ -83,9 +103,19 @@ public class Vehicle extends Thread {
 		if (getDirection() == 1) {
 			lastOne = junction[startPos][getCurrent()-1]; 
 		}
+		if (getDirection() == 2) {
+			lastOne = junction[getCurrent()+1][startPos]; 			
+		}
+		if (getDirection() == 3) {
+			lastOne = junction[startPos][getCurrent()+1]; 
+		}
 		
 		return lastOne;
 	}
+	
+	
+	
+	
 	
 	
 	public int getCurrent() {
@@ -99,6 +129,9 @@ public class Vehicle extends Thread {
 		}
 		if (direction == 1 && curr == junction[0].length-1) {
 				return false;
+		}
+		if ((direction == 2 || direction == 3) && curr == 0) {
+			return false;
 		}
 		else 
 			return true;	

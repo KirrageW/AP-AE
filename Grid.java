@@ -13,9 +13,6 @@ public class Grid {
 	private Condition occupiedCondition = spaceLock.newCondition();
 	
 	private String representation = "| ";
-	private String emptyRepresentation = "| ";
-	private Grid nextGrid;
-	
 	
 	private boolean isTaken = false;
 	
