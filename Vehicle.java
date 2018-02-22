@@ -1,5 +1,6 @@
 // an abstract class providing basic functionality for 'vehicle' threads that interact with grid square locks and conditions
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 // will be abstract after tests - for different vehicles 
 
@@ -15,6 +16,8 @@ public abstract class Vehicle extends Thread {
 	protected Grid[][] junction; // needs one of these...
 	protected int startPos; 
 	protected int curr;
+	// spec 2 - an int representing which row or column to be spawned at, instead of default random spawning
+	protected int position;
 	
 	public Vehicle(int direction, String rep, Grid[][] x) {
 		
@@ -47,6 +50,39 @@ public abstract class Vehicle extends Thread {
 			location = junction[startPos][curr]; 			
 		}
 		
+	}
+	
+	public Vehicle(int direction, String rep, Grid[][] x, int spawnZoneLower, int spawnZoneUpper) {
+		
+		this.direction = direction;
+		this.representation = rep;
+		this.junction = x;
+		
+		Random rand = new Random(); 
+		speed = rand.nextInt(1000);
+		
+		startPos = ThreadLocalRandom.current().nextInt(spawnZoneLower, spawnZoneUpper);
+		
+		if (direction == 0) {
+			curr = 0;
+			//startPos = rand.nextInt(x[0].length);
+			location = junction[curr][startPos];
+		}
+		if (direction == 1) {
+			curr = 0;
+			//startPos = rand.nextInt(x.length);
+			location = junction[startPos][curr]; 			
+		}
+		if (direction == 2) {
+			curr = x.length-1;
+			//startPos = rand.nextInt(x[0].length);
+			location = junction[curr][startPos]; 			
+		}
+		if (direction == 3) {
+			curr = x[0].length-1;
+			//startPos = rand.nextInt(x.length);
+			location = junction[startPos][curr]; 			
+		}
 	}
 	
 	public Vehicle() {		

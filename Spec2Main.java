@@ -23,13 +23,15 @@ public class Spec2Main {
 			// spawn cars
 			for (;;) {
 				try {
-					Thread.sleep(500);
+					Thread.sleep(800);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				new Car(2,"o",junction).start();
-				new Car(3,"-",junction).start();
+				new Car(0,"o",junction,0,10).start();
+				new Car(2,"o",junction,10,20).start();
+				new Car(1,"-",junction,0,5).start();
+				new Car(3,"-",junction,5,10).start();		
 			}
 			
 			
@@ -39,7 +41,7 @@ public class Spec2Main {
 			
 			// for testing
 			
-			/*Vehicle testCar = new Vehicle(0, "o", junction);
+			/*Vehicle testCar = new Car(0, "o", junction, 8);
 			testCar.start();
 			BrokenCar testBroke1 = new BrokenCar(junction[5][5]);
 			BrokenCar testBroke2 = new BrokenCar(junction[5][6]);
