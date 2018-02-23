@@ -33,9 +33,8 @@ public class Render extends Thread{
 				e.printStackTrace();
 			}		
 		}
-		
-		//System.exit(0); // closes program after drawing 2000 times, at 20 milliseconds is 40 seconds. 
 	}
+	
 	
 	
 	

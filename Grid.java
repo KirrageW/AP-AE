@@ -5,10 +5,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Grid {
-	
-	
-	
-	
+			
 	private ReentrantLock spaceLock = new ReentrantLock();
 	private Condition occupiedCondition = spaceLock.newCondition();
 	
@@ -24,43 +21,32 @@ public class Grid {
 		try {
 			Thread.sleep(x.getSpeed());
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}	
 		
 		spaceLock.lock();
-		//System.out.println("I've gone in "+this);
-		try {
-		    
+
+		try {	    
 		    while (isTaken) {
-		    	//System.out.println("I'm in here: "+this);
 		        occupiedCondition.await();
-		    }
-		    
+		    }	    
 		    isTaken = true;
 		    representation = "|"+x.getRepresentation();	
-			
-		
+				
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 	
 		} finally {
 		    spaceLock.unlock();
-		    //System.out.println("I'm unlocking this: "+this);
 		}
 		
 	}
 	
 	//should only be successful if the vehicle has entered the next grid square
-	public void leaveGridSquare(Vehicle x) {
-		//System.out.println("I'm leaving this: "+this);
-			
+	public void leaveGridSquare(Vehicle x) {			
 		spaceLock.lock();
 		try {
-		    isTaken = false;
-		  
-		    
+		    isTaken = false;	    
 		    occupiedCondition.signalAll();
 		} finally {
 		   spaceLock.unlock();
@@ -74,7 +60,6 @@ public class Grid {
 		representation = x;
 	}
 
-	
 	public String getRepresentation() {
 			return representation;
 	}
