@@ -19,22 +19,24 @@ public class Spec1Main {
 			}
 
 			
-			// start drawing
+			// start drawing on a separate thread
 				Render renderer = new Render(junction);
 				renderer.start();
 				
-				// spawn cars
-				for (;;) {
+				
+				// spawn vehicles indefinitely
+			/*	for (;;) {
 					try {
-						Thread.sleep(500);
+						Thread.sleep(500); // every half a second
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					// spawn one of each of these types of vehicles: 
 					new Car(0,"o",junction).start();
 					new Car(1,"-",junction).start();
 				}
-				
+				*/
 				
 				
 				
@@ -42,14 +44,14 @@ public class Spec1Main {
 				
 				// for testing
 				
-				/*Vehicle testCar = new Vehicle(0, "o", junction);
+				Vehicle testCar = new Car(0, "o", junction);
 				testCar.start();
 				BrokenCar testBroke1 = new BrokenCar(junction[5][5]);
 				BrokenCar testBroke2 = new BrokenCar(junction[5][6]);
 				BrokenCar testBroke3 = new BrokenCar(junction[5][7]);
 				BrokenCar testBroke4 = new BrokenCar(junction[5][8]);
 				BrokenCar testBroke5 = new BrokenCar(junction[5][9]);
-				BrokenCar testBroke6 = new BrokenCar(junction[5][10]);*/
+				BrokenCar testBroke6 = new BrokenCar(junction[5][10]);
 				
 				
 				

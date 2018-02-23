@@ -52,6 +52,8 @@ public abstract class Vehicle extends Thread {
 		
 	}
 	
+	// spec 2 constructor - added two new ints to denote boundaries for random spawn location
+	// this allows the vehicle to be randomly spawned only in a certain area, or constrained down to a single lane
 	public Vehicle(int direction, String rep, Grid[][] x, int spawnZoneLower, int spawnZoneUpper) {
 		
 		this.direction = direction;
@@ -59,28 +61,26 @@ public abstract class Vehicle extends Thread {
 		this.junction = x;
 		
 		Random rand = new Random(); 
+		
+		// speed set for all, but could easily be another variable in the vehicle constructor
 		speed = rand.nextInt(1000);
 		
 		startPos = ThreadLocalRandom.current().nextInt(spawnZoneLower, spawnZoneUpper);
 		
 		if (direction == 0) {
 			curr = 0;
-			//startPos = rand.nextInt(x[0].length);
 			location = junction[curr][startPos];
 		}
 		if (direction == 1) {
 			curr = 0;
-			//startPos = rand.nextInt(x.length);
 			location = junction[startPos][curr]; 			
 		}
 		if (direction == 2) {
 			curr = x.length-1;
-			//startPos = rand.nextInt(x[0].length);
 			location = junction[curr][startPos]; 			
 		}
 		if (direction == 3) {
 			curr = x[0].length-1;
-			//startPos = rand.nextInt(x.length);
 			location = junction[startPos][curr]; 			
 		}
 	}
@@ -109,11 +109,10 @@ public abstract class Vehicle extends Thread {
 		while (checkEnd()==true){
 					
 			directionTravel();
-			checkEnd();
 			location.occupyGridSquare(this);
 			getLastOne().leaveGridSquare(this);		
-		}
-		location.leaveGridSquare(this);
+		}	
+		location.leaveGridSquare(this);	
 	}
 	
 	public void directionTravel(){
@@ -148,10 +147,6 @@ public abstract class Vehicle extends Thread {
 		
 		return lastOne;
 	}
-	
-	
-	
-	
 	
 	
 	public int getCurrent() {
