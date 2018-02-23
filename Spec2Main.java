@@ -15,10 +15,7 @@ public class Spec2Main {
 				}				
 		}
 
-		// create new statistics class
-		Statistics stats = new Statistics();
-		
-		
+	
 		// makes use of a new spawner class - a threaded object that can spawn vehicles as usual, but with varying 
 		// delays between spawns - representing traffic density
 		
@@ -26,16 +23,17 @@ public class Spec2Main {
 		
 			Render renderer = new Render(junction);
 			renderer.start();
-			spawnTraffic spawner = new spawnTraffic(junction, 500, 0,"o", 0,10, stats); // grid, traffic delay, direction, shape, random spawn point between last two numbers
+			spawnTraffic spawner = new spawnTraffic(junction, 500, 0,"o", 0,10, "N-S", renderer); // grid, traffic delay, direction, shape, random spawn point between last two numbers
 			spawner.start();
-			spawnTraffic spawner1 = new spawnTraffic(junction, 1000, 2,"o", 10,20, stats);  
+			spawnTraffic spawner1 = new spawnTraffic(junction, 1000, 2,"o", 10,20, "S-N", renderer);  
 			spawner1.start();
-			spawnTraffic spawner2 = new spawnTraffic(junction, 1500, 1,"-", 0,5, stats);  
+			spawnTraffic spawner2 = new spawnTraffic(junction, 1500, 1,"-", 0,5, "W-E", renderer);  
 			spawner2.start();
-			spawnTraffic spawner3 = new spawnTraffic(junction, 1500, 3,"-", 5,10, stats);  
+			spawnTraffic spawner3 = new spawnTraffic(junction, 1500, 3,"-", 5,10, "E-W", renderer);  
 			spawner3.start();
 			
-			stats.displayStatistics();
+			
+			
 		}	
 	
 

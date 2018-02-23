@@ -1,46 +1,69 @@
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-// this class will need the estimatedRunTime of each thread, and the spawnTraffic class ID that created it...
+// a class to perform maths and stuff on the run times of threads
 
 public class Statistics {
 	
-	private ArrayList<Long> runTimes;
-	private ArrayList<spawnTraffic> generators;
-
+	private ArrayList<Long> threadTimes;
+	private String generatorID;
 	
-	public Statistics() {
-		runTimes = new ArrayList<Long>();
-		generators = new ArrayList<spawnTraffic>();
+	
+	public Statistics(ArrayList<Long> threadTimesForAGenerator, String id) {
+		this.threadTimes = threadTimesForAGenerator;
+		this.generatorID = id;
 	}
 	
-	public long getRunTime(spawnTraffic spawner) {	
-		for (int i=0;  i< generators.size(); i++) {
-			if generators[i].equals(spawner){
-				
+	public void getData(ArrayList<Long> threadTimesForAGenerator) {
+		
+	}
+	
+	private long calculateAverage() {
+		  Long sum = (long) 0.0;
+		  if(!threadTimes.isEmpty()) {
+		    for (Long time : threadTimes) {
+		        sum += time;
+		    }
+		    return sum.longValue() / threadTimes.size();
+		  }
+		  return sum;
+		}
+	private long getMin() {
+		Long min = threadTimes.get(0);
+			for (int i = 0; i < threadTimes.size(); i ++) {
+				if (min > threadTimes.get(i)){
+					min = threadTimes.get(i);
+				}				
 			}
 			
-		}
+		return min;
+	}	
+	private long getMax() {
+		Long max = threadTimes.get(0);
+			for (int i = 0; i < threadTimes.size(); i ++) {
+				if (max < threadTimes.get(i)){
+					max = threadTimes.get(i);
+				}
+				
+			}
+		return max;
+	}
+	
+	private double convertToMilliseconds(long x) {
+		double y = x/1000000;
+		return y;
+	}
+	
+	public void publishResults() {
+		StringBuilder data = new StringBuilder();
+		data.append("\r\nThe average time of vehicles made by the "+generatorID+" generator to finish was : "+convertToMilliseconds(calculateAverage()));
+		data.append("\r\nThe slowest thread took : "+convertToMilliseconds(getMax()) +" milliseconds");
+		data.append("\r\nThe fastest thread took : "+convertToMilliseconds(getMin()) +" milliseconds");
+		data.append("\r\n-----------------------------------------\r\n");
+		System.out.print(data);
+		
 	}
 	
 	
-	// gets sent the time and the generator who created it, by every thread that makes it to the end of the grid
-	public void saveRunTime(long duration, spawnTraffic spawnedBy) { // and add the spawner.......
-		runTimes.add(duration);
-		generators.add(spawnedBy);
-	}
 	
-	private void calculateThings() {
-		for (int i =0; i < runTimes.size(); i++) {
-			
-		}
-	}
-	
-	public void displayStatistics() {
-		//System.out.println(runTimes.iterator());
-	}
 
 }

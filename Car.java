@@ -9,8 +9,8 @@ public class Car extends Vehicle{
 		super(direction, rep, x);
 	}
 	
-	public Car(int direction, String rep, Grid[][] x, int spawnLower, int spawnHigher, Statistics stats, spawnTraffic spawnedBy) {
-		super(direction, rep, x, spawnLower, spawnHigher, stats, spawnedBy);
+	public Car(int direction, String rep, Grid[][] x, int spawnLower, int spawnHigher, spawnTraffic spawnedBy) {
+		super(direction, rep, x, spawnLower, spawnHigher, spawnedBy);
 	}
 	
 

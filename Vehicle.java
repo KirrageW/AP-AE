@@ -20,7 +20,6 @@ public abstract class Vehicle extends Thread {
 	// added for spec2 
 	protected long startTime; 
 	protected long estimatedTime;
-	protected Statistics statistics;
 	protected spawnTraffic spawnedBy;
 	
 	
@@ -59,7 +58,7 @@ public abstract class Vehicle extends Thread {
 	
 	// spec 2 constructor - added two new ints to denote boundaries for random spawn location
 	// this allows the vehicle to be randomly spawned only in a certain area, or constrained down to a single lane
-	public Vehicle(int direction, String rep, Grid[][] x, int spawnZoneLower, int spawnZoneUpper, Statistics stats, spawnTraffic spawnedBy) {
+	public Vehicle(int direction, String rep, Grid[][] x, int spawnZoneLower, int spawnZoneUpper, spawnTraffic spawnedBy) {
 		
 		this.direction = direction;
 		this.representation = rep;
@@ -89,7 +88,6 @@ public abstract class Vehicle extends Thread {
 			location = junction[startPos][curr]; 			
 		}
 		
-		this.statistics = stats;
 		this.spawnedBy = spawnedBy;
 	}
 	
@@ -127,7 +125,7 @@ public abstract class Vehicle extends Thread {
 		location.leaveGridSquare(this);	
 		estimatedTime = System.nanoTime() - startTime;
 		//System.err.println(estimatedTime);
-		statistics.saveRunTime(estimatedTime, spawnedBy);
+		spawnedBy.collectRunTimes(estimatedTime);
 	}
 	
 	
