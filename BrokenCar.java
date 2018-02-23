@@ -2,7 +2,7 @@
 
 public class BrokenCar extends Vehicle {
 	
-	String representation = "o";
+	String representation = "x";
 	
 	
 	

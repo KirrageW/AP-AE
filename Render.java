@@ -5,6 +5,7 @@ public class Render extends Thread{
 	
 	private Grid[][] junction;
 	private StringBuilder frame;
+	private int counter;
 	
 	public Render(Grid[][] x) {
 		this.junction = x;
@@ -12,7 +13,7 @@ public class Render extends Thread{
 	}
 	
 	public void run() {
-		while(true) {
+		while(counter<2000) {
 			try {
 				frame = new StringBuilder();
 				frame.append("\r\n----------------------------------------");
@@ -25,11 +26,16 @@ public class Render extends Thread{
 				frame.append("\r\n----------------------------------------");
 				
 				Thread.sleep(20);
+				counter++;
 				System.out.print(frame);
 			
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}		
 		}
+		System.exit(0); // closes program after drawing 2000 times, at 20 milliseconds is 40 seconds. 
 	}
+	
+	
+	
 }

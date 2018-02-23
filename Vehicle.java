@@ -7,17 +7,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Vehicle extends Thread {
 	
-	protected int direction; // 0 = north to south, 1 = west to east
+	protected int direction; // 0 = north to south, 1 = west to east, 2 = east to west, 3 = south to north
 	protected int speed; // how long it will wait in each grid
-	protected int size; // different types of vehicle may occupy more than one lane!
+	protected int size; // different types of vehicle could occupy more than one lane!
 	protected String representation;
 	protected Grid location; 
 	protected Grid lastOne;
 	protected Grid[][] junction; // needs one of these...
 	protected int startPos; 
 	protected int curr;
-	// spec 2 - an int representing which row or column to be spawned at, instead of default random spawning
-	protected int position;
+	
+	// added for spec2 
+	protected long startTime; 
+	protected long estimatedTime;
+	protected Statistics statistics;
+	protected spawnTraffic spawnedBy;
+	
 	
 	public Vehicle(int direction, String rep, Grid[][] x) {
 		
@@ -54,7 +59,7 @@ public abstract class Vehicle extends Thread {
 	
 	// spec 2 constructor - added two new ints to denote boundaries for random spawn location
 	// this allows the vehicle to be randomly spawned only in a certain area, or constrained down to a single lane
-	public Vehicle(int direction, String rep, Grid[][] x, int spawnZoneLower, int spawnZoneUpper) {
+	public Vehicle(int direction, String rep, Grid[][] x, int spawnZoneLower, int spawnZoneUpper, Statistics stats, spawnTraffic spawnedBy) {
 		
 		this.direction = direction;
 		this.representation = rep;
@@ -83,6 +88,9 @@ public abstract class Vehicle extends Thread {
 			curr = x[0].length-1;
 			location = junction[startPos][curr]; 			
 		}
+		
+		this.statistics = stats;
+		this.spawnedBy = spawnedBy;
 	}
 	
 	public Vehicle() {		
@@ -104,7 +112,11 @@ public abstract class Vehicle extends Thread {
 		return representation;
 	}
 	
+	
+	
+	// run method of the thread
 	public void run() {
+		startTime = System.nanoTime();
 		location.occupyGridSquare(this);	
 		while (checkEnd()==true){
 					
@@ -113,7 +125,13 @@ public abstract class Vehicle extends Thread {
 			getLastOne().leaveGridSquare(this);		
 		}	
 		location.leaveGridSquare(this);	
+		estimatedTime = System.nanoTime() - startTime;
+		//System.err.println(estimatedTime);
+		statistics.saveRunTime(estimatedTime, spawnedBy);
 	}
+	
+	
+	
 	
 	public void directionTravel(){
 		
@@ -167,6 +185,11 @@ public abstract class Vehicle extends Thread {
 		else 
 			return true;	
 		}	
+	
+	// returns the estimated time it took to reach the end of the grid[][]. in nanoseconds...
+	public long getRunTime() {
+		return estimatedTime;
+	}
 }
 
 
