@@ -9,20 +9,22 @@ public abstract class Vehicle extends Thread {
 
 	protected int direction; // 0 = north to south, 1 = west to east, 2 = east to west, 3 = south to north
 	protected int speed; // how long it will wait in each grid
-	protected int size; // different types of vehicle could occupy more than one lane!
 	protected String representation;
-	protected Grid location;
-	protected Grid lastOne;
-	protected Grid[][] junction; // needs one of these...
+	// gridSquare references
+	protected GridSquare nextSquare; 
+	protected GridSquare currentSquare;
+	protected GridSquare[][] junction; // ref to whole junction
+	// for navigation 
 	protected int startPos;
 	protected int curr;
 
 	// added for spec2
 	protected long startTime;
 	protected long estimatedTime;
-	protected spawnTraffic spawnedBy;
+	protected Generator spawnedBy;
 
-	public Vehicle(int direction, String rep, Grid[][] x) {
+	// spec1 constructor; simple, concise, random spawn point along entire matrix axis
+	public Vehicle(int direction, String rep, GridSquare[][] x) {
 
 		this.direction = direction;
 		this.representation = rep;
@@ -34,22 +36,22 @@ public abstract class Vehicle extends Thread {
 		if (direction == 0) {
 			curr = 0;
 			startPos = rand.nextInt(x[0].length);
-			location = junction[curr][startPos];
+			nextSquare = junction[curr][startPos];
 		}
 		if (direction == 1) {
 			curr = 0;
 			startPos = rand.nextInt(x.length);
-			location = junction[startPos][curr];
+			nextSquare = junction[startPos][curr];
 		}
 		if (direction == 2) {
 			curr = x.length - 1;
 			startPos = rand.nextInt(x[0].length);
-			location = junction[curr][startPos];
+			nextSquare = junction[curr][startPos];
 		}
 		if (direction == 3) {
 			curr = x[0].length - 1;
 			startPos = rand.nextInt(x.length);
-			location = junction[startPos][curr];
+			nextSquare = junction[startPos][curr];
 		}
 
 	}
@@ -58,8 +60,8 @@ public abstract class Vehicle extends Thread {
 	// location
 	// this allows the vehicle to be randomly spawned only in a certain area, or
 	// constrained down to a single lane
-	public Vehicle(int direction, String rep, Grid[][] x, int spawnZoneLower, int spawnZoneUpper,
-			spawnTraffic spawnedBy) {
+	public Vehicle(int direction, String rep, GridSquare[][] x, int spawnZoneLower, int spawnZoneUpper,
+			Generator spawnedBy) {
 
 		this.direction = direction;
 		this.representation = rep;
@@ -75,19 +77,19 @@ public abstract class Vehicle extends Thread {
 
 		if (direction == 0) {
 			curr = 0;
-			location = junction[curr][startPos];
+			nextSquare = junction[curr][startPos];
 		}
 		if (direction == 1) {
 			curr = 0;
-			location = junction[startPos][curr];
+			nextSquare = junction[startPos][curr];
 		}
 		if (direction == 2) {
 			curr = x.length - 1;
-			location = junction[curr][startPos];
+			nextSquare = junction[curr][startPos];
 		}
 		if (direction == 3) {
 			curr = x[0].length - 1;
-			location = junction[startPos][curr];
+			nextSquare = junction[startPos][curr];
 		}
 
 		this.spawnedBy = spawnedBy;
@@ -104,67 +106,71 @@ public abstract class Vehicle extends Thread {
 		return speed;
 	}
 
-	public int getSize() {
-		return size;
-	}
-
 	public String getRepresentation() {
 		return representation;
 	}
 
 	// run method of the thread
 	public void run() {
-		startTime = System.nanoTime();
-		location.occupyGridSquare(this);
+		startTime = System.nanoTime(); // begin timing
+		
+		// main movement sequence
+		nextSquare.occupyGridSquare(this);
 		while (checkEnd() == true) {
 
 			directionTravel();
-			location.occupyGridSquare(this);
-			getLastOne().leaveGridSquare(this);
+			nextSquare.occupyGridSquare(this);
+			getSquareStillIn().leaveGridSquare(this);
 		}
-		location.leaveGridSquare(this);
+		nextSquare.leaveGridSquare(this);
+		
+		// end time and send to generator before thread dies
 		estimatedTime = System.nanoTime() - startTime;
-		if (spawnedBy != null)
-			spawnedBy.collectRunTimes(estimatedTime);
+		if (spawnedBy != null) {
+			spawnedBy.collectRunTimes(estimatedTime);}
 	}
 
+	// this method gives a reference to the next square, so it can try and occupy it
 	public void directionTravel() {
 
 		if (getDirection() == 0) {
-			location = junction[++curr][startPos]; // have to use matrix coordinate
+			nextSquare = junction[++curr][startPos]; // have to use matrix coordinate
 		}
 		if (getDirection() == 1) {
-			location = junction[startPos][++curr]; // so basically, location is moved to the next one...
+			nextSquare = junction[startPos][++curr]; // so basically, location is moved to the next one...
 		}
 		if (getDirection() == 2) {
-			location = junction[--curr][startPos]; // so basically, location is moved to the next one...
+			nextSquare = junction[--curr][startPos]; 
 		}
 		if (getDirection() == 3) {
-			location = junction[startPos][--curr]; // so basically, location is moved to the next one...
+			nextSquare = junction[startPos][--curr]; 
 		}
 	}
 
-	public Grid getLastOne() {
+	// fetch a ref to the square it's still occupying, so it can leave it when ready
+	public GridSquare getSquareStillIn() {
 		if (getDirection() == 0) {
-			lastOne = junction[getCurrent() - 1][startPos];
+			currentSquare = junction[getCurrent() - 1][startPos];
 		}
 		if (getDirection() == 1) {
-			lastOne = junction[startPos][getCurrent() - 1];
+			currentSquare = junction[startPos][getCurrent() - 1];
 		}
 		if (getDirection() == 2) {
-			lastOne = junction[getCurrent() + 1][startPos];
+			currentSquare = junction[getCurrent() + 1][startPos];
 		}
 		if (getDirection() == 3) {
-			lastOne = junction[startPos][getCurrent() + 1];
+			currentSquare = junction[startPos][getCurrent() + 1];
 		}
 
-		return lastOne;
+		return currentSquare;
 	}
 
+	// helped method for the above
 	public int getCurrent() {
 		return curr;
 	}
 
+	// checks to see if the thread has reached the end of its 'road'
 	public boolean checkEnd() {
 		if (direction == 0 && curr == junction.length - 1) {
 			return false;

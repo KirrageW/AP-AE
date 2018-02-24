@@ -1,20 +1,17 @@
 import java.util.ArrayList;
 
 // a class to perform maths and stuff on the run times of threads
+// note that it is a one to one association with a Generator.
 
 public class Statistics {
 	
 	private ArrayList<Long> threadTimes;
-	private String generatorID;
+	private String generatorID; // which generator is it analysing results from
 	
 	
 	public Statistics(ArrayList<Long> threadTimesForAGenerator, String id) {
 		this.threadTimes = threadTimesForAGenerator;
 		this.generatorID = id;
-	}
-	
-	public void getData(ArrayList<Long> threadTimesForAGenerator) {
-		
 	}
 	
 	private long calculateAverage() {

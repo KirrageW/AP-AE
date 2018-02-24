@@ -3,13 +3,13 @@
 
 public class Car extends Vehicle{
 	
-	int size = 1;
+	// preset Car-like attributes would go here, such as size, speed limits etc.
 
-	public Car(int direction, String rep, Grid[][] x) {
+	public Car(int direction, String rep, GridSquare[][] x) {
 		super(direction, rep, x);
 	}
 	
-	public Car(int direction, String rep, Grid[][] x, int spawnLower, int spawnHigher, spawnTraffic spawnedBy) {
+	public Car(int direction, String rep, GridSquare[][] x, int spawnLower, int spawnHigher, Generator spawnedBy) {
 		super(direction, rep, x, spawnLower, spawnHigher, spawnedBy);
 	}
 	
