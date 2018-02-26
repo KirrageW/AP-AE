@@ -56,9 +56,15 @@ public class Generator extends Thread {
 	
 	// make a stats class to perform operations on that arraylist
 	public void sendToStats() {
+		// check that the array list contains some results
+		if (!runTimes.isEmpty()) {
 		Statistics statCalculator = new Statistics(runTimes, name);
 		statCalculator.publishResults();
+		}
+		else
+			System.out.println("No thread made by the "+name+" generator made it to the other side!");
 	}
+	
 	
 	
 	

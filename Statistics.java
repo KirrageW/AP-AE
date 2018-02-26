@@ -25,6 +25,7 @@ public class Statistics {
 		  return sum;
 		}
 	private long getMin() {
+		if (!threadTimes.isEmpty()) {
 		Long min = threadTimes.get(0);
 			for (int i = 0; i < threadTimes.size(); i ++) {
 				if (min > threadTimes.get(i)){
@@ -34,7 +35,10 @@ public class Statistics {
 			
 		return min;
 	}	
+		return 0; // shouldn't return this, as checked in Generator not to send empty list...
+	}
 	private long getMax() {
+		if (!threadTimes.isEmpty()) {
 		Long max = threadTimes.get(0);
 			for (int i = 0; i < threadTimes.size(); i ++) {
 				if (max < threadTimes.get(i)){
@@ -43,6 +47,8 @@ public class Statistics {
 				
 			}
 		return max;
+		}
+		return 0;
 	}
 	
 	private double convertToMilliseconds(long x) {

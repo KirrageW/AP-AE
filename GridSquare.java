@@ -44,7 +44,7 @@ public class GridSquare {
 	}
 	
 	// can only be called if the vehicle has entered the next grid square (see run method in Vehicle)
-	public void leaveGridSquare(Vehicle x) {			
+	public void leaveGridSquare(Vehicle x) {	
 		spaceLock.lock();
 		try {
 		    isTaken = false;	    

@@ -22,7 +22,6 @@ public class APSpec1 {
 				Render renderer = new Render(junction);
 				renderer.start();
 				
-				
 				// spawn vehicles indefinitely
 				while (renderer.isAlive()) {
 					try {
@@ -35,6 +34,13 @@ public class APSpec1 {
 					new Car(0,"o",junction).start();
 					new Car(1,"-",junction).start();
 				}				
-				System.exit(0);		// end when rendering ends						
+				System.exit(0);		// end when rendering ends			
+				
+				
+
+			/*	Vehicle testCar = new Car(0, "o", junction);
+				testCar.start();*/
 			}		
+	
+
 }

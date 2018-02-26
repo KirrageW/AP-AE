@@ -32,6 +32,7 @@ public abstract class Vehicle extends Thread {
 
 		Random rand = new Random();
 		speed = rand.nextInt(1000);
+		
 
 		if (direction == 0) {
 			curr = 0;
@@ -110,6 +111,7 @@ public abstract class Vehicle extends Thread {
 		return representation;
 	}
 
+	
 	// run method of the thread
 	public void run() {
 		startTime = System.nanoTime(); // begin timing
@@ -122,14 +124,24 @@ public abstract class Vehicle extends Thread {
 			nextSquare.occupyGridSquare(this);
 			getSquareStillIn().leaveGridSquare(this);
 		}
-		nextSquare.leaveGridSquare(this);
+		
+		// below handles the last gridSquare of its journey - can't call directionTravel() again because we're at end of array.
+		try {
+			Thread.sleep(speed); // sleep in last square as per 
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		nextSquare.leaveGridSquare(this); // leave square after sleep
+	
 		
 		// end time and send to generator before thread dies
 		estimatedTime = System.nanoTime() - startTime;
-		if (spawnedBy != null) {
-			spawnedBy.collectRunTimes(estimatedTime);}
+		if (spawnedBy != null) { // spec1 vehicles aren't created by a generator, so don't bother sending times etc... 
+			spawnedBy.collectRunTimes(estimatedTime);} 
 	}
 
+	
 	// this method gives a reference to the next square, so it can try and occupy it
 	public void directionTravel() {
 

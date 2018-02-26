@@ -20,7 +20,7 @@ public class APSpec2 {
 		// delays between spawns - representing traffic density		
 			Render renderer = new Render(junction);
 			renderer.start();
-			Generator spawner = new Generator(junction, 500, 0,"o", 0,10, "N-S", renderer); // grid, traffic delay, direction, shape, random spawn point between last two numbers
+	/*		Generator spawner = new Generator(junction, 500, 0,"o", 0,10, "N-S", renderer); // grid, traffic delay, direction, shape, random spawn point between last two numbers
 			spawner.start();
 			Generator spawner1 = new Generator(junction, 1000, 2,"o", 10,20, "S-N", renderer);  
 			spawner1.start();
@@ -38,8 +38,24 @@ public class APSpec2 {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			*/
 			
+			Generator test1 = new Generator(junction, 1500, 1,"o", 0,m/2, "blocked lanes", renderer);  
+			test1.start();
+			Generator test2 = new Generator(junction, 1500, 1,"-", m/2,m, "open road", renderer);  
+			test2.start();
+			BrokenCar testBroke1 = new BrokenCar(junction[0][10]);
+			BrokenCar testBroke2 = new BrokenCar(junction[1][10]);
+			BrokenCar testBroke3 = new BrokenCar(junction[2][10]);
+			BrokenCar testBroke4 = new BrokenCar(junction[3][10]);
+			BrokenCar testBroke5 = new BrokenCar(junction[4][10]);
+			
+			try {
+				test1.join();
+				test2.join();
+				System.exit(0); 
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}	
 		}	
-	
-
 }
