@@ -17,10 +17,10 @@ public class Generator extends Thread {
 	
 	// for spec2 statistics
 	private ArrayList<Long> runTimes;
-	private Render renderer;
-	
+	private Render renderer; 
+		
 	// constructor - i wanted to just give a vehicle reference, but i need anonymous creation in my spawning run method. not sure how to get rid of the reference 
-	// that would be attached to the vehicle... this was also a problem for collecting run times for each thread for the statistics stuff.
+	// ..that would be attached to the vehicle. this was also a problem for collecting run times for each thread for the statistics stuff.
 	public Generator(GridSquare[][] x, int traffic, int vehicleDirection, String vehicleShape, int roadLower, int roadUpper, String name, Render r) {
 		this.junction = x;
 		this.density = traffic;
@@ -34,7 +34,7 @@ public class Generator extends Thread {
 	}
 	
 	public void run() {
-		// runs whilst the renderer is still drawing
+		// runs whilst the renderer is still drawing - optional, could detach from renderer and just run for a chosen amount of time
 		while (renderer.isAlive()) {
 			
 			try {
@@ -43,7 +43,8 @@ public class Generator extends Thread {
 				e.printStackTrace();
 			}
 			new Car (direction, shape, junction, roadLower, roadUpper, this).start(); // if this thread had a reference it would say the thread is already running, 																								
-																// or would not record the proper time it took to run through the grid (overwritten by next one created)						
+													// or would not record the proper time it took to run through the grid (overwritten by next one created)		
+			
 		}
 		// and sends statistics off at the end
 		sendToStats();

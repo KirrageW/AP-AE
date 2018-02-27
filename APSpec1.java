@@ -16,7 +16,6 @@ public class APSpec1 {
 						junction[i][j] = new GridSquare(); 
 					}				
 			}
-
 			
 			// start drawing on a separate thread
 				Render renderer = new Render(junction);
@@ -35,12 +34,5 @@ public class APSpec1 {
 					new Car(1,"-",junction).start();
 				}				
 				System.exit(0);		// end when rendering ends			
-				
-				
-
-			/*	Vehicle testCar = new Car(0, "o", junction);
-				testCar.start();*/
 			}		
-	
-
 }

@@ -22,6 +22,7 @@ public abstract class Vehicle extends Thread {
 	protected long startTime;
 	protected long estimatedTime;
 	protected Generator spawnedBy;
+	
 
 	// spec1 constructor; simple, concise, random spawn point along entire matrix axis
 	public Vehicle(int direction, String rep, GridSquare[][] x) {
@@ -92,7 +93,7 @@ public abstract class Vehicle extends Thread {
 			curr = x[0].length - 1;
 			nextSquare = junction[startPos][curr];
 		}
-
+		
 		this.spawnedBy = spawnedBy;
 	}
 
@@ -111,6 +112,7 @@ public abstract class Vehicle extends Thread {
 		return representation;
 	}
 
+	
 	
 	// run method of the thread
 	public void run() {
@@ -133,7 +135,6 @@ public abstract class Vehicle extends Thread {
 			e.printStackTrace();
 		}
 		nextSquare.leaveGridSquare(this); // leave square after sleep
-	
 		
 		// end time and send to generator before thread dies
 		estimatedTime = System.nanoTime() - startTime;
@@ -141,6 +142,7 @@ public abstract class Vehicle extends Thread {
 			spawnedBy.collectRunTimes(estimatedTime);} 
 	}
 
+	
 	
 	// this method gives a reference to the next square, so it can try and occupy it
 	public void directionTravel() {
